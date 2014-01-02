@@ -6,6 +6,9 @@ Simple wrapper for the PHP's built-in function `levenshtein` will save your time
 
 In work (*10%*), __not completed__
 
+
+You will need __PHP 5.4__ (at least) 
+
 ## What it is going to look like
 
 ```php
