@@ -73,7 +73,12 @@ class TypoHelper
 		}
 
 		$this->_checkLength ($option);
-		$this->_options [] = $this->_prepareString ($option);
+		$option = $this->_prepareString ($option);
+
+		if (!array_search ($option, $this->getOptions ()))
+		{
+			$this->_options [] = $option;
+		}
 	}
 
 	/**
