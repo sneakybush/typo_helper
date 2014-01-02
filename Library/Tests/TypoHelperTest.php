@@ -49,4 +49,60 @@ class TypoHelperTest extends PHPUnit_Framework_TestCase
 
 		$this->assertTrue (true);
 	}
+
+	/**
+	 * @expectedException InvalidArgumentException
+	 */ 
+
+	public function testAddOptionException ()
+	{
+		$this ()->addOption (null);
+	}
+
+	/**
+	 * @expectedException InvalidArgumentException
+	 */ 
+
+	public function testAddManyOptionsException ()
+	{
+		$this ()->addManyOptions (false);
+	}
+
+	/**
+	 * @expectedException InvalidArgumentException
+	 */
+
+	public function testPassedStringIsTooLong ()
+	{
+		$maxLength = 255;
+		# Whoops!
+		$this ()->addOption (str_repeat ('#', $maxLength + 1));
+	}  
+
+	/**
+	 * @expectedException InvalidArgumentException
+	 */ 
+
+	public function testConstructorException ()
+	{
+		new TypoHelper (null);
+	}
+
+	public function testPrepareString ()
+	{
+		$this ()->addOption (' TesT  ');
+		$this->assertEquals ('test', $this ()->getOptions () [0]);
+
+		$object = new TypoHelper (['trim' => false]);
+		$object->addOption ('  Apple  ');
+		$this->assertEquals('  apple  ', $object->getOptions () [0]);
+
+		$object = null;
+
+		$object = new TypoHelper (['toLowerCase' => false]);
+		$object->addOption ('  HaCKs  ');
+		$this->assertEquals  ('HaCKs', $object->getOptions () [0]);
+	}
+
+	
 }
