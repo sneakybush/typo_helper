@@ -134,5 +134,27 @@ class TypoHelperTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals ($this ()->getInput (), 'mirage');
 	}
 
-	
+	public function testHasEqual ()
+	{
+		$this ()->addManyOptions (['firefox', 'opera', 'chrome', 'safari']);
+		$this ()->setInput ('chrome');
+		$this->assertTrue ($this ()->hasEqual ());
+	}
+
+	# this one probably needs WAY MORE testing
+	public function testFindClosest ()
+	{
+		$this ()->addManyOptions (
+			['php', 'ruby', 'python', 'javascript', 'java', 'c']
+		);
+
+		$this ()->setInput  ('pyton');
+		$this->assertEquals ('python', $this ()->findClosest ());
+
+		$this ()->setInput  ('rby');
+		$this->assertEquals ('ruby', $this ()->findClosest ());
+
+		$this ()->setInput  ('javaskrip');
+		$this->assertEquals ('javascript', $this ()->findClosest ());
+	}
 }
