@@ -4,12 +4,13 @@ Simple wrapper for the PHP's built-in function `levenshtein` will save your time
 
 ## Status
 
-In work (*10%*), __not completed__
+__Completed__ (*100%*)
 
+## Requirements
 
-You will need __PHP 5.4__ (at least) 
+You need __PHP 5.4 =<__
 
-## What it is going to look like
+## What it looks like
 
 ```php
 $userInput = 'javaskript'; # what a stupid typo!
@@ -30,6 +31,26 @@ else
 }
 ```
 The output will be `Did you mean javascript?`
+
+## Building docs
+
+```
+apigen --source Library/TypoHelper.php --destination docs --php no --title 'TypoHelper'
+```
+
+## Running unit tests
+
+```
+phpunit
+```
+
+## Checking requirements
+
+If you want to send us some modifications, make sure new code doesn't break requirements
+
+```
+phpcompatinfo --no-configuration -vvv print --reference PHP5 --report summary Library/TypoHelper.php
+```
 
 ## License
 
