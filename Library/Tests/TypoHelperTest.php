@@ -29,11 +29,6 @@ class TypoHelperTest extends PHPUnit_Framework_TestCase
 		$this ()->addManyOptions (['chrome', 'ie', 'opera']);
 	}
 
-	/**
-	 * @depends testAddOption
-	 * @depends testAddManyOptions
-	 */ 
-
 	public function testGetOptions ()
 	{
 		$this->testAddOption ();
