@@ -90,8 +90,9 @@ class TypoHelperTest extends PHPUnit_Framework_TestCase
 
 	public function testPrepareString ()
 	{
+		# by default [toLowerCase => true, trim => true]
 		$this ()->addOption (' TesT  ');
-		$this->assertEquals ('test', $this ()->getOptions () [0]);
+		$this->assertEquals  ('test', $this ()->getOptions () [0]);
 
 		$object = new TypoHelper (['trim' => false]);
 		$object->addOption ('  Apple  ');
@@ -102,6 +103,35 @@ class TypoHelperTest extends PHPUnit_Framework_TestCase
 		$object = new TypoHelper (['toLowerCase' => false]);
 		$object->addOption ('  HaCKs  ');
 		$this->assertEquals  ('HaCKs', $object->getOptions () [0]);
+	}
+
+	/**
+	 * @expectedException BadMethodCallException
+	 */ 
+
+	public function testGetInputException ()
+	{
+		$this ()->getInput ();
+	}
+
+	/**
+	 * @expectedException InvalidArgumentException
+	 */  
+
+	public function testSetInputException ()
+	{
+		$this ()->setInput (null);
+	}
+
+	public function testSetInput ()
+	{
+		$this ()->setInput ('mirage');
+	} 
+
+	public function testGetInput ()
+	{
+		$this->testSetInput ();
+		$this->assertEquals ($this ()->getInput (), 'mirage');
 	}
 
 	
