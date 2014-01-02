@@ -1,0 +1,5 @@
+<phpunit colors="true" bootstrap="Library/TypoHelper.php">
+	<testsuite name="TypoHelper TestSuite">
+		<file>Library/Tests/TypoHelperTest.php</file>
+	</testsuite>
+</phpunit>
