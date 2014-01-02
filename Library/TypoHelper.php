@@ -21,13 +21,37 @@ class TypoHelper
 	protected $_input;
 
 	/**
-	 * The constructor
+	 * @var array instance settings
 	 */ 
 
-	public function __construct ()
+	protected $_settings;
+
+	/**
+	 * The constructor
+	 * @throws InvalidArgumentException
+	 */ 
+
+	public function __construct ($settings = [])
 	{
 		$this->_input   = null;
 		$this->_options = [];
+
+		if (!is_array ($settings))
+		{
+			throw new InvalidArgumentException (
+				'$settings must of the type ARRAY; '
+				. gettype ($settings)
+				. ' passed'
+			);
+		}
+
+		$defaultSettings = 
+		[
+			'trim'        => true,
+			'toLowerCase' => true,
+		];
+
+		$this->_settings = array_merge ($defaultSettings, $settings);
 	}	
 
 	/**
@@ -49,7 +73,7 @@ class TypoHelper
 		}
 
 		$this->_checkLength ($option);
-		$this->_options [] = $option;
+		$this->_options [] = $this->_prepareString ($option);
 	}
 
 	/**
@@ -105,7 +129,7 @@ class TypoHelper
 		}
 
 		$this->_checkLength ($input);
-		$this->_input = $input;
+		$this->_input = $this->_prepareString ($input);
 	}  
 
 	/**
@@ -217,5 +241,58 @@ class TypoHelper
 				. ' symbols passed'
 			);
 		}
+	}
+
+	/**
+	 * Returns an element from $_settings by $key
+	 * @param string $key key
+	 * @throws InvalidArgumentException
+	 * @throws UnexpectedValueException
+	 * @return mixed
+	 */ 
+
+	protected function _getSetting ($key)
+	{
+		if (!is_string ($key))
+		{
+			throw new InvalidArgumentException (
+				'$key must be of the type STRING; '
+				. gettype ($key)
+				. ' passed'
+			);
+		}
+
+		if (array_key_exists ($key, $this->_settings))
+		{
+			return $this->_settings [$key];
+		}
+
+		throw new UnexpectedValueException (
+			sprintf ('`%s` not found in $_settings', $key)
+		);
+	}
+
+	/**
+	 * Modifies given string by rules set in $_settings
+	 * @see $_settings
+	 * @param string $string string
+	 * @return string
+	 */ 
+
+	protected function _prepareString ($string)
+	{
+		$string = (string) $string;
+
+		if ($this->_getSetting ('trim'))
+		{
+			$string = trim ($string);
+		}
+
+		if ($this->_getSetting ('toLowerCase'))
+		{
+			$string = strtolower ($string);
+		}
+
+		return $string;
 	}
 }
